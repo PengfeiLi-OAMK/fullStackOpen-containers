@@ -41,7 +41,7 @@ services:
     image: redis
     command: ['redis-server', '--appendonly', 'yes']
     volumes:
-      - ./todo-backend/redis_data:/data
+      - redis_data:/data
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
@@ -60,3 +60,5 @@ services:
         condition: service_started
       server:
         condition: service_started
+volumes:
+  redis_data:
