@@ -1,0 +1,43 @@
+# 1. 依赖依赖包（最核心，绝对不能拷！）
+node_modules
+.pnpm-store
+.yarn
+
+# 2. 本地打包产物（容器内会执行 npm run build 重新生成）
+dist
+build
+.next
+out
+
+# 3. 本地开发环境的隐私与配置文件
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+
+# 4. 版本控制系统
+.git
+.gitignore
+.gitattributes
+
+# 5. 编辑器与系统临时缓存文件
+.vscode
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+.DS_Store
+Thumbs.db
+
+# 6. 各种日志与测试报告
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.nyc_output
+coverage

@@ -1,7 +1,9 @@
 const express = require('express');
 const { Todo } = require('../mongo')
 const router = express.Router();
-
+const redis = require('../redis');
+// Implement a todo counter that saves the number of created todos to Redis:
+// Whenever a request is sent to add a todo, increment the counter by one.
 /* GET todos listing. */
 router.get('/', async (_, res) => {
   const todos = await Todo.find({})
@@ -14,6 +16,8 @@ router.post('/', async (req, res) => {
     text: req.body.text,
     done: false
   })
+  const currentCount = await redis.get('added_todos') || 0
+  await redis.set('added_todos',Number(currentCount) + 1);
   res.send(todo);
 });
 
@@ -35,12 +39,21 @@ singleRouter.delete('/', async (req, res) => {
 
 /* GET todo. */
 singleRouter.get('/', async (req, res) => {
-  res.sendStatus(405); // Implement this
+  res.send(req.todo);
 });
 
 /* PUT todo. */
 singleRouter.put('/', async (req, res) => {
-  res.sendStatus(405); // Implement this
+  if (req.body.text !== undefined) {
+    req.todo.text = req.body.text;
+  }
+
+  if (req.body.done !== undefined) {
+    req.todo.done = req.body.done;
+  }
+
+  const updatedTodo = await req.todo.save();
+  res.send(updatedTodo);
 });
 
 router.use('/:id', findByIdMiddleware, singleRouter)

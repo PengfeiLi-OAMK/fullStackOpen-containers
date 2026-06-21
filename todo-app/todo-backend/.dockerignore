@@ -1,0 +1,46 @@
+# 1. 依赖包（依然是最核心的，绝对不能拷贝！）
+node_modules
+.pnpm-store
+.yarn
+
+# 2. ⚠️ 后端特有：本地数据库数据及本地缓存（最关键的差异！）
+# 如果你在本地运行了 Docker 的 Mongo 或 Redis，它们可能会在本地生成数据文件夹，绝对不要带进镜像
+mongo_data
+redis_data
+.data
+db
+
+# 3. 后端编译产物（如果你用的是 TypeScript / NestJS）
+# 如果你的后端是用纯 JavaScript (Node.js) 写的，通常没有 dist，但如果有，也要排除
+dist
+build
+
+# 4. 本地环境的隐私与配置文件（保护后端的数据库密码、JWT 密钥）
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.pem
+*.key
+
+# 5. 版本控制系统
+.git
+.gitignore
+.gitattributes
+
+# 6. 编辑器与系统临时缓存文件
+.vscode
+.idea
+*.suo
+.DS_Store
+Thumbs.db
+
+# 7. 各种日志、测试报告及持久化日志
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+logs
+*.log
+.nyc_output
+coverage
